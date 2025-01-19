@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: clp-api-server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+    url: jdbc:mysql://localhost:3306/clp_db
+  jpa:
+    hibernate:
+      ddl-auto: update
+server:
+  port: 8080
+
+logging:
+  level:
+    web: debug

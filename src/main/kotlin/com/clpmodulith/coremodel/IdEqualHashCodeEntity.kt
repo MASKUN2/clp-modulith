@@ -1,15 +1,14 @@
 package com.clpmodulith.coremodel
 
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.MappedSuperclass
+import jakarta.persistence.*
 import org.hibernate.proxy.HibernateProxy
 
 @MappedSuperclass
 abstract class IdEqualHashCodeEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     var id: String? = null
         protected set
 

@@ -30,16 +30,33 @@ repositories {
 extra["springModulithVersion"] = "1.3.1"
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    //common
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    //validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    //Modulith
     implementation("org.springframework.modulith:spring-modulith-starter-core")
     implementation("org.springframework.modulith:spring-modulith-starter-jpa")
+    testImplementation("org.springframework.modulith:spring-modulith-starter-test")
+    //Persistence, DataBase
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j")
+    //Web
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    //Oauth2
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation ("io.jsonwebtoken:jjwt-api:0.12.6")
+    implementation ("io.jsonwebtoken:jjwt-impl:0.12.6")
+    implementation ("io.jsonwebtoken:jjwt-jackson:0.12.6")
+
+    testImplementation("org.springframework.security:spring-security-test")
+
+    //Test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("org.springframework.modulith:spring-modulith-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

@@ -1,4 +1,4 @@
-package com.clpmodulith.oauth2
+package com.clpmodulith.security.oauth2
 
 enum class Role(
     /**

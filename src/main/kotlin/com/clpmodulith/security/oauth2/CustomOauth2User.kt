@@ -1,4 +1,4 @@
-package com.clpmodulith.oauth2
+package com.clpmodulith.security.oauth2
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User

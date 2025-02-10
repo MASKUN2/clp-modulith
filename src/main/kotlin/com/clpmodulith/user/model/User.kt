@@ -1,14 +1,13 @@
 package com.clpmodulith.user.model
 
 import com.clpmodulith.coremodel.IdEqualHashCodeEntity
-import com.clpmodulith.oauth2.Role
+import com.clpmodulith.security.oauth2.Role
 import jakarta.persistence.*
 
 @Entity
 class User(
     name: String,
-    role: Role = Role.GUEST,
-
+    role: Role = Role.GUEST
     ) : IdEqualHashCodeEntity() {
 
     @Column(name = "name")

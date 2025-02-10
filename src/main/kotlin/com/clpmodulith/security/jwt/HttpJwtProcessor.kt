@@ -1,8 +1,10 @@
-package com.clpmodulith.security
+package com.clpmodulith.security.jwt
 
+import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 
-object HttpRequestJwtReader {
+object HttpJwtProcessor {
     private const val AUTHORIZATION_HEADER = "Authorization"
     private const val JWT_PREFIX = "Bearer"
     private const val JWT_COOKIE_NAME = "jwt_token"
@@ -22,5 +24,16 @@ object HttpRequestJwtReader {
         }
 
         return null
+    }
+
+    fun writeCookie(response: HttpServletResponse, jwt: String) {
+        response.addCookie(
+            Cookie(JWT_COOKIE_NAME, jwt).apply {
+                isHttpOnly = true // JS에서 접근 불가능 (보안 강화)
+                //secure = true // HTTPS에서만 전송
+                path = "/" // 모든 경로에서 쿠키 사용 가능
+                maxAge = 60 * 60 * 24 //1 day
+            }
+        )
     }
 }

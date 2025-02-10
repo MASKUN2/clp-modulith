@@ -1,5 +1,6 @@
 package com.clpmodulith.security
 
+import com.clpmodulith.security.authentication.CustomAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -7,11 +8,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @EnableWebSecurity(debug = false)
 @Configuration
-class SecurityConfig {
-
+class SecurityConfig(
+    val customAuthenticationFilter: CustomAuthenticationFilter,
+    val authenticationSuccessHandler: AuthenticationSuccessHandler,
+) {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -37,14 +42,9 @@ class SecurityConfig {
             logout {
                 logoutUrl = "/logout"
             }
-            oauth2Login {
-                //authenticationSuccessHandler = AuthenticationSuccessHandler();
-                userInfoEndpoint {
-                    //userService = UserService()
-                }
-            }
-
+            http.addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
         }
+        http.oauth2Login().successHandler(authenticationSuccessHandler)
         return http.build()
     }
 }

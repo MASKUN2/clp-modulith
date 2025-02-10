@@ -1,4 +1,4 @@
-package com.clpmodulith.security
+package com.clpmodulith.security.jwt
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -23,15 +23,7 @@ data class JwtProperties(
 ) {
     val secretKey: SecretKey = SecretKeySpec(rawKey.toByteArray(), algorithm)
 
-    init {
-        checkAlgorithmOrThrow(algorithm)
-    }
-
     override fun toString(): String {
         return "[hidden for security]"
-    }
-
-    private fun checkAlgorithmOrThrow(algorithm: String) {
-        Cipher.getInstance(algorithm) //throw when invalid
     }
 }

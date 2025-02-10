@@ -1,6 +1,7 @@
-package com.clpmodulith.security
+package com.clpmodulith.security.jwt
 
 import io.jsonwebtoken.Jwts
+import jakarta.servlet.http.Cookie
 import org.springframework.stereotype.Component
 import java.time.Instant
 import java.util.*
@@ -22,9 +23,14 @@ class JwtComponent(
             .get(claimName, clazz)
     }
 
+    fun getSubject(jwt: String): String {
+        return jwtParser.parseSignedClaims(jwt).payload.subject
+    }
+
     fun makeJwt(
         from: Instant = Instant.now(),
         to: Instant = from.plusSeconds(jwtProperties.durationSeconds.toLong()),
+        subject: String,
         claims: Map<String, Any> = HashMap()
     ): String {
         require(from.isBefore(to)) { "The argument 'from' must be before 'to'. from= $from , to = $to " }
@@ -32,7 +38,11 @@ class JwtComponent(
         return Jwts.builder()
             .issuedAt(Date.from(from))
             .expiration(Date.from(to))
+
+            .subject(subject)
+
             .claims().add(claims).and()
+
             .signWith(jwtProperties.secretKey)
             .compact()
     }

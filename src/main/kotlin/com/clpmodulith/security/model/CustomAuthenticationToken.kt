@@ -1,13 +1,12 @@
-package com.clpmodulith.security
+package com.clpmodulith.security.model
 
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 
-class ClpAuthenticationToken(
-    private val principal: ClpPrincipal,
-    private val credential: String,
-    private val isAuthenticated : Boolean = true,
+class CustomAuthenticationToken(
+    private val principal: CustomPrincipal,
+    private var isAuthenticated : Boolean = true,
     private val authorities : MutableCollection<out GrantedAuthority>,
     private val webAuthenticationDetails : WebAuthenticationDetails
 ) : Authentication {
@@ -20,8 +19,8 @@ class ClpAuthenticationToken(
         return authorities
     }
 
-    override fun getCredentials(): Any {
-        return credential
+    override fun getCredentials(): Any? {
+        return null
     }
 
     override fun getDetails(): Any {
@@ -37,8 +36,6 @@ class ClpAuthenticationToken(
     }
 
     override fun setAuthenticated(isAuthenticated: Boolean) {
-        if (isAuthenticated) {
-            throw IllegalArgumentException("Cannot manually set authentication status")
-        }
+        this.isAuthenticated = isAuthenticated
     }
 }
